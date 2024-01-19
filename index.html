@@ -465,6 +465,177 @@
 
         </script>
     </main>
+        <div
+      id="chartDiv"
+      style="max-width: 840px; height: 750px; margin: 0px auto"
+    ></div>
+
+    <script type="text/javascript">
+      /*
+A slope chart with point axis ticks axis tick.
+Learn how to:
+
+  - Make a slope chart with point axis ticks.
+*/
+      // JS
+      var data = [
+        { name: "1910", year2001: 1910, year2019: 1910 },
+        { name: "1911", year2001: 1911, year2019: 1910 },
+        { name: "1912", year2001: 1912, year2019: 1913 },
+        { name: "1913", year2001: 1913, year2019: 1979 },
+        { name: "1914", year2001: 1914, year2019: 1914 },
+        { name: "1915", year2001: 1915, year2019: 1970 },
+        { name: "1916", year2001: 1916, year2019: 1917 },
+        { name: "1917", year2001: 1917, year2019: 1918 },
+        { name: "1918", year2001: 1918, year2019: 1926 },
+        { name: "1919", year2001: 1919, year2019: 1927 },
+        { name: "1920", year2001: 1920, year2019: 1928 },
+        { name: "1921", year2001: 1921, year2019: 1925 },
+        { name: "1922", year2001: 1922, year2019: 1925 },
+        { name: "1923", year2001: 1923, year2019: 1925 },
+        { name: "1924", year2001: 1924, year2019: 1925 },
+        { name: "1925", year2001: 1925, year2019: 1987 },
+        { name: "1926", year2001: 1926, year2019: 1931 },
+        { name: "1927", year2001: 1927, year2019: 1931 },
+        { name: "1928", year2001: 1928, year2019: 1970 },
+        { name: "1929", year2001: 1929, year2019: 1931 },
+        { name: "1930", year2001: 1930, year2019: 1931 },
+        { name: "1931", year2001: 1931, year2019: 1931 },
+        { name: "1932", year2001: 1932, year2019: 1931 },
+        { name: "1933", year2001: 1933, year2019: 1932 },
+        { name: "1934", year2001: 1934, year2019: 1933 },
+        { name: "1935", year2001: 1935, year2019: 1970 },
+        { name: "1936", year2001: 1936, year2019: 1970 },
+        { name: "1937", year2001: 1937, year2019: 1965 },
+        { name: "1938", year2001: 1938, year2019: 1966 },
+        { name: "1939", year2001: 1939, year2019: 1967 },
+        { name: "1940", year2001: 1940, year2019: 1967 },
+        { name: "1941", year2001: 1941, year2019: 1967 },
+        { name: "1942", year2001: 1942, year2019: 1967 },
+        { name: "1943", year2001: 1943, year2019: 1967 },
+        { name: "1944", year2001: 1944, year2019: 1967 },
+        { name: "1945", year2001: 1945, year2019: 1967 },
+        { name: "1946", year2001: 1946, year2019: 1967 },
+        { name: "1947", year2001: 1947, year2019: 1967 },
+        { name: "1948", year2001: 1948, year2019: 1967 },
+        { name: "1949", year2001: 1949, year2019: 1967 },
+        { name: "1950", year2001: 1950, year2019: 1967 },
+        { name: "1951", year2001: 1951, year2019: 1967 },
+        { name: "1952", year2001: 1952, year2019: 1967 },
+        { name: "1953", year2001: 1953, year2019: 1978 },
+        { name: "1954", year2001: 1954, year2019: 1978 },
+        { name: "1955", year2001: 1955, year2019: 1967 },
+        { name: "1956", year2001: 1956, year2019: 1988 },
+        { name: "1957", year2001: 1957, year2019: 1978 },
+        { name: "1958", year2001: 1958, year2019: 1967 },
+        { name: "1959", year2001: 1959, year2019: 1993 },
+        { name: "1960", year2001: 1960, year2019: 1993 },
+        { name: "1961", year2001: 1961, year2019: 1993 },
+        { name: "1962", year2001: 1962, year2019: 1993 },
+        { name: "1963", year2001: 1963, year2019: 1993 },
+        { name: "1964", year2001: 1964, year2019: 1993 },
+        { name: "1965", year2001: 1965, year2019: 1993 },
+        { name: "1966", year2001: 1966, year2019: 1993 },
+        { name: "1967", year2001: 1967, year2019: 1993 },
+        { name: "1968", year2001: 1968, year2019: 1993 },
+        { name: "1969", year2001: 1969, year2019: 1993 },
+        { name: "1970", year2001: 1970, year2019: 1993 },
+        { name: "1971", year2001: 1971, year2019: 1999 },
+        { name: "1972", year2001: 1972, year2019: 1982 },
+        { name: "1973", year2001: 1973, year2019: 1982 },
+        { name: "1974", year2001: 1974, year2019: 1982 },
+        { name: "1975", year2001: 1975, year2019: 1994 },
+        { name: "1976", year2001: 1976, year2019: 1994 },
+        { name: "1977", year2001: 1977, year2019: 1994 },
+        { name: "1978", year2001: 1978, year2019: 1994 },
+        { name: "1979", year2001: 1979, year2019: 1994 },
+        { name: "1980", year2001: 1980, year2019: 1994 },
+        { name: "1981", year2001: 1981, year2019: 1994 },
+        { name: "1982", year2001: 1982, year2019: 1994 },
+        { name: "1983", year2001: 1983, year2019: 1994 },
+        { name: "1984", year2001: 1984, year2019: 1994 },
+        { name: "1985", year2001: 1985, year2019: 1994 },
+        { name: "1986", year2001: 1986, year2019: 1994 },
+        { name: "1987", year2001: 1987, year2019: 1994 },
+        { name: "1988", year2001: 1988, year2019: 1994 },
+        { name: "1989", year2001: 1989, year2019: 1994 },
+        { name: "1990", year2001: 1990, year2019: 1994 },
+        { name: "1991", year2001: 1991, year2019: 1994 },
+        { name: "1992", year2001: 1992, year2019: 1994 },
+        { name: "1993", year2001: 1993, year2019: 1994 },
+        { name: "1994", year2001: 1994, year2019: 1994 },
+      ];
+
+      var series = data.map(function (item) {
+        return {
+          name: item.name,
+          points: [
+            { x: "1/1/2001", y: item.year2001 },
+            { x: "1/1/2019", y: item.year2019 },
+          ],
+        };
+      });
+
+      var chart = JSC.chart("chartDiv", {
+        debug: true,
+        title_label_text: "Date-Création/Acquisition",
+        palette: ["#346D94", "#346D94", "#346D94", "#346D94", "#346D94"],
+        chartArea_clipContent: false,
+        legend_visible: false,
+        defaultAxis: { defaultTick_label_style_fontSize: "12px" },
+        yAxis: [
+          {
+            defaultTick_enabled: false,
+            scale_range_padding: 0.001,
+          },
+          {
+            id: "y2",
+            orientation: "right",
+            defaultTick_enabled: false,
+          },
+        ],
+        xAxis: {
+          scale_type: "time",
+          formatString: "",
+          defaultTick: {
+            gridLine_color: "#BDBDBD",
+            line_color: "none",
+          },
+          scale_interval: { unit: "year", multiplier: 18 },
+        },
+        defaultSeries: {
+          firstPoint_yAxisTick: {
+            label: {
+              text: "%seriesName",
+              color: "%color",
+            },
+            gridLine_visible: false,
+            line_visible: false,
+          },
+          lastPoint_yAxisTick: {
+            axisId: "y2",
+            label: {
+              text: "%yValue",
+              color: "%color",
+              style_fontSize: "13px",
+            },
+            gridLine_visible: false,
+            line_visible: false,
+          },
+        },
+        defaultPoint: {
+          hoverAction: "highlightSeries",
+          marker: {
+            type: "square",
+            outline_width: 0,
+            size: 12,
+          },
+          tooltip: "%icon %seriesName %xValue<br><b>%yValue GWh</b>",
+          focusGlow: false,
+        },
+        series: series,
+      });
+    </script>
 </body>
 
 </html>

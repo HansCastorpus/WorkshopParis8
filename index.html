@@ -636,6 +636,456 @@ Learn how to:
         series: series,
       });
     </script>
+     <div>
+            <h1 id="#ring">Ringchart</h1>
+
+
+
+            <script src="https://d3js.org/d3.v7.min.js"></script>
+            <script>
+                let global = [];
+                window.onload = function () {
+                    fetch("src/Data_all.json")
+                        .then(response => response.json())
+                        .then((data) => {
+                            globals = data;
+
+                            // je stock chaque catégorie dans un nouveau tableau
+                            let architecture = globals.filter(global => global.Categories == "Architecture_Interieure");
+                            let graphique = globals.filter(global => global.Categories == "Design_Graphique");
+                            let objet = globals.filter(global => global.Categories == "Objet_Design");
+                            let ceramique = globals.filter(global => global.Categories == "Ceramique_Verre_Mosaique");
+                            let textile = globals.filter(global => global.Categories == "Design_Textile");
+                            let mobilier = globals.filter(global => global.Categories == "Design_Mobilier");
+                            let publication = globals.filter(global => global.Categories == "Publication");
+                            let sansdom = globals.filter(global => global.Categories == "Sans_Domaine");
+
+                            // au lieu de compter le nombre d'oeuvre par catégorie on peut directement faire catégorie.lentgh
+                            var chartData = {
+                                "barCirclemyData1": [
+                                    { "index": 0.3, "value": 174, "fill": "#D93D1A", "label": "#D93D1A" },
+                                    { "index": 0.4, "value": 108, "fill": "#402222", "label": "#402222" },
+                                    { "index": 0.5, "value": 65, "fill": "#D93829", "label": "#D93829" },
+                                    { "index": 0.6, "value": 25, "fill": "#F27166", "label": "#F27166" },
+                                    { "index": 0.7, "value": 38, "fill": "#F0F2F2", "label": "#F0F2F2" },
+
+                                ],
+                                "barCirclemyData2": [
+                                    { "index": 0.3, "value": 150, "fill": "#D9B814", "label": "#D9B814" },
+                                    { "index": 0.4, "value": 40, "fill": "#BFA20F", "label": "#BFA20F" },
+                                    { "index": 0.5, "value": 80, "fill": " #121440", "label": "#121440" },
+                                    { "index": 0.6, "value": 25, "fill": "#194973", "label": "194973" },
+                                    { "index": 0.7, "value": 50, "fill": "#779DA6 ", "label": "779DA6 " },
+                                ],
+                                "barCirclemyData3": [
+                                    { "index": 0.3, "value": 174, "fill": "#A65F21", "label": "#A65F21" },
+                                    { "index": 0.4, "value": 108, "fill": "#F2AE72", "label": "#F2AE72" },
+                                    { "index": 0.5, "value": 102, "fill": "#734124", "label": "#734124" },
+                                    { "index": 0.6, "value": 61, "fill": "#F2AD85", "label": "#F2AD85" },
+                                    { "index": 0.7, "value": 38, "fill": "#40221F", "label": "#40221F" },
+                                ],
+                                "barCirclemyData4": [
+                                    { "index": 0.3, "value": 200, "fill": "#BF3641", "label": "#BF3641" },
+                                    { "index": 0.4, "value": 10, "fill": "#1B2459", "label": "#1B2459" },
+                                    { "index": 0.5, "value": 102, "fill": "#73620E", "label": "#73620E" },
+                                    { "index": 0.6, "value": 45, "fill": "#8C7814", "label": "#8C7814" },
+                                    { "index": 0.7, "value": 15, "fill": "#8C1C1C", "label": "#8C1C1C" },
+
+                                ],
+                                "barCirclemyData5": [
+                                    { "index": 0.3, "value": 174, "fill": "#F2F2F2", "label": "#F2F2F2" },
+                                    { "index": 0.4, "value": 108, "fill": "#BFBFBF", "label": "#BFBFBF" },
+                                    { "index": 0.5, "value": 102, "fill": "#A6A6A6", "label": "#A6A6A6" },
+                                    { "index": 0.6, "value": 61, "fill": "#737373", "label": "#737373" },
+                                    { "index": 0.7, "value": 38, "fill": "#595959", "label": "#595959" },
+
+                                ],
+                                "barCirclemyData6": [
+                                    { "index": 0.3, "value": 174, "fill": "#8C3F5B", "label": "#8C3F5B" },
+                                    { "index": 0.4, "value": 108, "fill": "#F2F2F2", "label": "#F2F2F2" },
+                                    { "index": 0.5, "value": 65, "fill": "#184A8C", "label": "#184A8C" },
+                                    { "index": 0.6, "value": 10, "fill": "#BF8641", "label": "#BF8641" },
+                                    { "index": 0.7, "value": 10, "fill": "#BF212E", "label": "#BF212E" },
+
+                                ],
+                                "barCirclemyData7": [
+                                    { "index": 0.3, "value": 174, "fill": "#F2F2F2", "label": "#F2F2F2" },
+                                    { "index": 0.4, "value": 75, "fill": "#3C734F", "label": "#3C734F" },
+                                    { "index": 0.5, "value": 50, "fill": "#498C53", "label": "#498C53" },
+                                    { "index": 0.6, "value": 25, "fill": "#3C7344", "label": "#3C7344" },
+                                    { "index": 0.7, "value": 5, "fill": "#735B46", "label": "#735B46" },
+
+                                ],
+                                "barCirclemyData8": [
+                                    { "index": 0.3, "value": 174, "fill": "#9BBFAB", "label": "#9BBFAB" },
+                                    { "index": 0.4, "value": 25, "fill": "#D9AA1E", "label": "#D9AA1E" },
+                                    { "index": 0.5, "value": 102, "fill": "#F2D479", "label": "#F2D479" },
+                                    { "index": 0.6, "value": 15, "fill": "#BF8821", "label": "#BF8821" },
+                                    { "index": 0.7, "value": 5, "fill": "#F2F2F2", "label": "#F2F2F2" },
+
+                                ],
+                            };
+
+                            function drawBarCircleChart(data, target, values, labels) {
+                                var w = 362,
+                                    h = 362,
+                                    size = data[0].value * 2,
+                                    radius = 240,
+                                    sectorWidth = .1,
+                                    radScale = 25,
+                                    sectorScale = 1.6,
+                                    target = d3.select(target),
+                                    valueText = d3.select(values),
+                                    labelText = d3.select(labels);
+
+
+                                var arc = d3.svg.arc()
+                                    .innerRadius(function (d, i) { return (d.index / sectorScale) * radius + radScale; })
+                                    .outerRadius(function (d, i) { return ((d.index / sectorScale) + (sectorWidth / sectorScale)) * radius + radScale; })
+                                    .startAngle(Math.PI)
+                                    .endAngle(function (d) { return Math.PI + (d.value / size) * 2 * Math.PI; });
+
+                                var path = target.selectAll("path")
+                                    .data(data);
+
+                                //TODO: seperate color and index from data object, make it a pain to update object order
+                                path.enter().append("svg:path")
+                                    .attr("fill", function (d, i) { return d.fill })
+                                    .attr("stroke", "white")
+                                    .attr("stroke-width", 1)
+                                    .transition()
+                                    .ease("elastic")
+                                    .duration(1000)
+                                    .delay(function (d, i) { return i * 100 })
+                                    .attrTween("d", arcTween);
+
+                                valueText.selectAll("tspan").data(data).enter()
+                                    .append("tspan")
+                                    .attr({
+                                        x: 50,
+                                        //determine l'espacement entre les valeurs
+                                        y: function (d, i) { return i * 15 },
+                                        "text-anchor": "end"
+                                    })
+                                    .text(function (d, i) { return data[i].value });
+
+                                labelText.selectAll("tspan").data(data).enter()
+                                    .append("tspan")
+                                    .attr({
+                                        x: 0,
+                                        y: function (d, i) { return i * 15 }
+                                    })
+                                    .text(function (d, i) { return data[i].label });
+
+                                function arcTween(b) {
+                                    var i = d3.interpolate({ value: 0 }, b);
+                                    return function (t) {
+                                        return arc(i(t));
+                                    };
+                                }
+                            }
+
+                            // Animation Queue
+                            setTimeout(function () { drawBarCircleChart(chartData.barCirclemyData2, "#circleBar-myData2-chart", "#circleBar-myData2-values", "#circleBar-myData2-labels") }, 500);
+                            setTimeout(function () { drawBarCircleChart(chartData.barCirclemyData1, "#circleBar-myData1-chart", "#circleBar-myData1-values", "#circleBar-myData1-labels") }, 800);
+                            setTimeout(function () { drawBarCircleChart(chartData.barCirclemyData3, "#circleBar-myData3-chart", "#circleBar-myData3-values", "#circleBar-myData3-labels") }, 900);
+                            setTimeout(function () { drawBarCircleChart(chartData.barCirclemyData4, "#circleBar-myData4-chart", "#circleBar-myData4-values", "#circleBar-myData4-labels") }, 1000);
+                            setTimeout(function () { drawBarCircleChart(chartData.barCirclemyData5, "#circleBar-myData5-chart", "#circleBar-myData5-values", "#circleBar-myData5-labels") }, 1100);
+                            setTimeout(function () { drawBarCircleChart(chartData.barCirclemyData6, "#circleBar-myData6-chart", "#circleBar-myData6-values", "#circleBar-myData6-labels") }, 1200);
+                            setTimeout(function () { drawBarCircleChart(chartData.barCirclemyData7, "#circleBar-myData7-chart", "#circleBar-myData7-values", "#circleBar-myData7-labels") }, 1300);
+                            setTimeout(function () { drawBarCircleChart(chartData.barCirclemyData8, "#circleBar-myData8-chart", "#circleBar-myData8-values", "#circleBar-myData8-labels") }, 1400);
+
+                            //Data2
+                            d3.select("#circleBar-myData2-icon")
+                                .transition()
+                                .delay(500)
+                                .duration(500)
+                                .attr("opacity", "1");
+                            d3.select("#circleBar-myData2-text")
+                                .transition()
+                                .delay(750)
+                                .duration(500)
+                                .attr("opacity", "1");
+
+                            d3.select("#circleBar-myData2-clipLabels")
+                                .transition()
+                                .delay(600)
+                                .duration(1250)
+                                .attr("height", "150");
+
+                            //Data1
+                            d3.select("#circleBar-myData1-icon")
+                                .transition()
+                                .delay(800)
+                                .duration(500)
+                                .attr("opacity", "1");
+                            d3.select("#circleBar-myData1-text")
+                                .transition()
+                                .delay(1050)
+                                .duration(500)
+                                .attr("opacity", "1");
+                            d3.select("#circleBar-myData1-clipLabels")
+                                .transition()
+                                .delay(900)
+                                .duration(1250)
+                                .attr("height", "150");
+
+                            //Data3
+                            d3.select("#circleBar-myData3-icon")
+                                .transition()
+                                .delay(800)
+                                .duration(500)
+                                .attr("opacity", "1");
+                            d3.select("#circleBar-myData3-text")
+                                .transition()
+                                .delay(1050)
+                                .duration(500)
+                                .attr("opacity", "1");
+                            d3.select("#circleBar-myData3-clipLabels")
+                                .transition()
+                                .delay(900)
+                                .duration(1250)
+                                .attr("height", "150");
+
+                            //Data4
+                            d3.select("#circleBar-myData4-icon")
+                                .transition()
+                                .delay(800)
+                                .duration(500)
+                                .attr("opacity", "1");
+                            d3.select("#circleBar-myData4-text")
+                                .transition()
+                                .delay(1050)
+                                .duration(500)
+                                .attr("opacity", "1");
+                            d3.select("#circleBar-myData4-clipLabels")
+                                .transition()
+                                .delay(900)
+                                .duration(1250)
+                                .attr("height", "150");
+
+                            //Data5
+                            d3.select("#circleBar-myData5-icon")
+                                .transition()
+                                .delay(800)
+                                .duration(500)
+                                .attr("opacity", "1");
+                            d3.select("#circleBar-myData5-text")
+                                .transition()
+                                .delay(1050)
+                                .duration(500)
+                                .attr("opacity", "1");
+                            d3.select("#circleBar-myData5-clipLabels")
+                                .transition()
+                                .delay(900)
+                                .duration(1250)
+                                .attr("height", "150");
+
+                            //Data6
+                            d3.select("#circleBar-myData6-icon")
+                                .transition()
+                                .delay(800)
+                                .duration(500)
+                                .attr("opacity", "1");
+                            d3.select("#circleBar-myData6-text")
+                                .transition()
+                                .delay(1050)
+                                .duration(500)
+                                .attr("opacity", "1");
+                            d3.select("#circleBar-myData6-clipLabels")
+                                .transition()
+                                .delay(900)
+                                .duration(1250)
+                                .attr("height", "150");
+
+                            //Data7
+                            d3.select("#circleBar-myData7-icon")
+                                .transition()
+                                .delay(800)
+                                .duration(500)
+                                .attr("opacity", "1");
+                            d3.select("#circleBar-myData7-text")
+                                .transition()
+                                .delay(1050)
+                                .duration(500)
+                                .attr("opacity", "1");
+                            d3.select("#circleBar-myData7-clipLabels")
+                                .transition()
+                                .delay(900)
+                                .duration(1250)
+                                .attr("height", "150");
+
+                            //Data8
+                            d3.select("#circleBar-myData8-icon")
+                                .transition()
+                                .delay(800)
+                                .duration(500)
+                                .attr("opacity", "1");
+                            d3.select("#circleBar-myData8-text")
+                                .transition()
+                                .delay(1050)
+                                .duration(500)
+                                .attr("opacity", "1");
+                            d3.select("#circleBar-myData8-clipLabels")
+                                .transition()
+                                .delay(900)
+                                .duration(1250)
+                                .attr("height", "150");
+
+
+                        });
+                }
+
+
+            </script>
+            <script src="js/script.js"></script>
+            <script src='js/d3.min.js'></script>
+
+
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" x="0px" y="0px" width="1000px"
+                height="3000px" overflow="visible" xml:space="preserve">
+
+                <g id="circleBarCharts">
+
+                    <!-- myData #1 Mood -->
+                    <g id="circleBar-myData2-group" transform="translate(0,0)">
+                        <image id="circleBar-myData2-icon" opacity="0" x="166" y="112" overflow="visible" width="98"
+                            height="77"
+                            xlink:href="https://cdn.discordapp.com/attachments/782971937977532439/1197860881720152104/WhatsApp_Image_2024-01-19_a_12.11.01_9ec99dcd.jpg?ex=65bccde1&is=65aa58e1&hm=8f5abec22e03c64f13ae46b711502bffaed6ffbeacc565a3752315a13ef668b1& " />
+                        <!-- xlink:href="https://i0.wp.com/images.metmuseum.org/CRDImages/as/original/DP130155.jpg?w=1290&ssl=1" -->
+
+                        <g id="circleBar-myData2-chart" transform="translate(215,150)"></g>
+                        <clippath id="circleBar-myData2-clipPath">
+                            <rect id="circleBar-myData2-clipLabels" x="205" y="215" width="180" height="0"></rect>
+                        </clippath>
+                        <g id="circleBar-myData2-legend" clip-path="url(#circleBar-myData2-clipPath)">
+                            <text id="circleBar-myData2-values" transform="translate(190,230)"></text>
+                            <text id="circleBar-myData2-labels" transform="translate(250,230)"></text>
+                        </g>
+                    </g>
+
+
+                    <!-- myData #2 Mood -->
+                    <g id="circleBar-myData1-group" transform="translate(0,0)">
+                        <image id="circleBar-myData1-icon" opacity="0" x="575" y="112" overflow="visible" width="98"
+                            height="77"
+                            xlink:href="https://cdn.discordapp.com/attachments/782971937977532439/1197860978612781228/WhatsApp_Image_2024-01-19_a_12.11.00_4dbae2da.jpg?ex=65bccdf8&is=65aa58f8&hm=f439eb6ab9c7c3251bf61f9ac8e1d69680252035d425dc573ebd694c634d214e& " />
+                        <g id="circleBar-myData1-chart" transform="translate(600,150)"></g>
+                        <clippath id="circleBar-myData1-clipPath">
+                            <rect id="circleBar-myData1-clipLabels" x="600" y="215" width="180" height="0"></rect>
+                        </clippath>
+                        <g id="circleBar-myData1-legend" clip-path="url(#circleBar-myData1-clipPath)">
+                            <text id="circleBar-myData1-values" transform="translate(600,230)"></text>
+                            <text id="circleBar-myData1-labels" transform="translate(660,230)"></text>
+                        </g>
+
+                        <!-- myData #3 Mood -->
+                        <g id="circleBar-myData3-group" transform="translate(0,500)">
+                            <image id="circleBar-myData4-icon" opacity="0" x="166" y="112" overflow="visible" width="98"
+                                height="77"
+                                xlink:href="https://cdn.discordapp.com/attachments/782971937977532439/1197863533027807252/WhatsApp_Image_2024-01-19_a_12.11.00_a4af914d_1.jpg?ex=65bcd059&is=65aa5b59&hm=9883046d65214c8f6609e4361a14cb944048c4945b3fd53f1c9a7cefe85a8a04& " />
+                            <!-- xlink:href="https://i0.wp.com/images.metmuseum.org/CRDImages/as/original/DP130155.jpg?w=1290&ssl=1" -->
+
+                            <g id="circleBar-myData3-chart" transform="translate(215,150)"></g>
+                            <clippath id="circleBar-myData3-clipPath">
+                                <rect id="circleBar-myData3-clipLabels" x="205" y="215" width="180" height="0"></rect>
+                            </clippath>
+                            <g id="circleBar-myData3-legend" clip-path="url(#circleBar-myData3-clipPath)">
+                                <text id="circleBar-myData3-values" transform="translate(190,230)"></text>
+                                <text id="circleBar-myData3-labels" transform="translate(250,230)"></text>
+                            </g>
+                        </g>
+
+                        <!-- myData #4 Mood -->
+                        <g id="circleBar-myData4-group" transform="translate(0,500)">
+                            <image id="circleBar-myData5-icon" opacity="0" x="575" y="112" overflow="visible" width="98"
+                                height="77"
+                                xlink:href=" https://cdn.discordapp.com/attachments/782971937977532439/1197876139788599316/WhatsApp_Image_2024-01-19_a_13.04.26_40820fb5.jpg?ex=65bcdc17&is=65aa6717&hm=b9a35a85ae94716a4475ffd86da80f956648e7a93567df6b243f46c12114a7e0& " />
+                            <g id="circleBar-myData4-chart" transform="translate(600,150)"></g>
+                            <clippath id="circleBar-myData4-clipPath">
+                                <rect id="circleBar-myData4-clipLabels" x="600" y="215" width="180" height="0"></rect>
+                            </clippath>
+                            <g id="circleBar-myData4-legend" clip-path="url(#circleBar-myData5-clipPath)">
+                                <text id="circleBar-myData4-values" transform="translate(600,230)"></text>
+                                <text id="circleBar-myData4-labels" transform="translate(660,230)"></text>
+                            </g>
+
+                            <!-- myData #5 Mood -->
+                            <g id="circleBar-myData5-group" transform="translate(0,500)">
+                                <image id="circleBar-myData5-icon" opacity="0" x="166" y="112" overflow="visible"
+                                    width="98" height="77"
+                                    xlink:href="https://cdn.discordapp.com/attachments/782971937977532439/1197874321557827694/WhatsApp_Image_2024-01-19_a_13.04.05_c3f27a7d.jpg?ex=65bcda65&is=65aa6565&hm=d2eaea3ceaf6eb8a2dc2d0a76a3079b1ac947f30d8b33fe1b1732389595c867b& " />
+                                <!-- xlink:href="https://i0.wp.com/images.metmuseum.org/CRDImages/as/original/DP130155.jpg?w=1290&ssl=1" -->
+
+                                <g id="circleBar-myData5-chart" transform="translate(215,150)"></g>
+                                <clippath id="circleBar-myData5-clipPath">
+                                    <rect id="circleBar-myData5-clipLabels" x="205" y="215" width="180" height="0">
+                                    </rect>
+                                </clippath>
+                                <g id="circleBar-myData5-legend" clip-path="url(#circleBar-myData5-clipPath)">
+                                    <text id="circleBar-myData5-values" transform="translate(190,230)"></text>
+                                    <text id="circleBar-myData5-labels" transform="translate(250,230)"></text>
+                                </g>
+                            </g>
+
+                            <!-- myData #6 Mood -->
+                            <g id="circleBar-myData6-group" transform="translate(0,500)">
+                                <image id="circleBar-myData6-icon" opacity="0" x="575" y="112" overflow="visible"
+                                    width="98" height="77"
+                                    xlink:href="https://cdn.discordapp.com/attachments/782971937977532439/1197876109501550684/WhatsApp_Image_2024-01-19_a_13.04.19_73d50e5e.jpg?ex=65bcdc0f&is=65aa670f&hm=3339f3006d54f439829032adfaa6f0a2dc6066ebfcd79622d84bf4862d1f9060&" />
+                                <g id="circleBar-myData6-chart" transform="translate(600,150)"></g>
+                                <clippath id="circleBar-myData6-clipPath">
+                                    <rect id="circleBar-myData6-clipLabels" x="600" y="215" width="180" height="0">
+                                    </rect>
+                                </clippath>
+                                <g id="circleBar-myData6-legend" clip-path="url(#circleBar-myData6-clipPath)">
+                                    <text id="circleBar-myData6-values" transform="translate(600,230)"></text>
+                                    <text id="circleBar-myData6-labels" transform="translate(660,230)"></text>
+                                </g>
+
+                                <!-- myData #7 Mood -->
+                                <g id="circleBar-myData7-group" transform="translate(0,500)">
+                                    <image id="circleBar-myData7-icon" opacity="0" x="166" y="112" overflow="visible"
+                                        width="98" height="77"
+                                        xlink:href="https://cdn.discordapp.com/attachments/782971937977532439/1197876028186566708/WhatsApp_Image_2024-01-19_a_13.04.17_e0aa4699.jpg?ex=65bcdbfc&is=65aa66fc&hm=c95f090f44b8bee2bc2dbb86d9e9729c2bb5e2eefcbf32e7f8f08f045a46f6e7& " />
+                                    <!-- xlink:href="https://i0.wp.com/images.metmuseum.org/CRDImages/as/original/DP130155.jpg?w=1290&ssl=1" -->
+
+                                    <g id="circleBar-myData7-chart" transform="translate(215,150)"></g>
+                                    <clippath id="circleBar-myData7-clipPath">
+                                        <rect id="circleBar-myData7-clipLabels" x="205" y="215" width="180" height="0">
+                                        </rect>
+                                    </clippath>
+                                    <g id="circleBar-myData7-legend" clip-path="url(#circleBar-myData7-clipPath)">
+                                        <text id="circleBar-myData7-values" transform="translate(190,230)"></text>
+                                        <text id="circleBar-myData7-labels" transform="translate(250,230)"></text>
+                                    </g>
+                                </g>
+
+                                <!-- myData #8 Mood -->
+                                <g id="circleBar-myData8-group" transform="translate(0,500)">
+                                    <image id="circleBar-myData8-icon" opacity="0" x="575" y="112" overflow="visible"
+                                        width="98" height="77"
+                                        xlink:href="https://cdn.discordapp.com/attachments/782971937977532439/1197874414906245181/WhatsApp_Image_2024-01-19_a_13.04.16_70df65fa.jpg?ex=65bcda7b&is=65aa657b&hm=3c276780ca14f2e683cd8aab0c9d9653e73c3bcb91cded4b8456c3ea0b4a4d32& " />
+                                    <g id="circleBar-myData8-chart" transform="translate(600,150)"></g>
+                                    <clippath id="circleBar-myData8-clipPath">
+                                        <rect id="circleBar-myData8-clipLabels" x="600" y="215" width="180" height="0">
+                                        </rect>
+                                    </clippath>
+                                    <g id="circleBar-myData8-legend" clip-path="url(#circleBar-myData8-clipPath)">
+                                        <text id="circleBar-myData8-values" transform="translate(600,230)"></text>
+                                        <text id="circleBar-myData8-labels" transform="translate(660,230)"></text>
+                                    </g>
+
+
+
+
+                                    <!-- END: myData1 Circle Bar Chart -->
+                                </g>
+
+            </svg>
+        </div>
+
 </body>
 
 </html>

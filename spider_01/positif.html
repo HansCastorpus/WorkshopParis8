@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonne version</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 300;
+            fill: black;
+            background-color: white;
+            text-align: center;
+            /*text-shadow: 0 2px 0 black, 2px 0 0 black, -2px 0 0 black, 0 -2px 0 black;*/
+            cursor: default;
+            transition: all 1s;
+        }
+
+        .legend {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            fill: #9544AF;
+        }
+
+        .tooltip {
+            fill: rgb(240, 45, 58);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="radarChart"></div>
+
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script>
+
+        let generals = [];
+
+        window.onload = function () {
+            fetch("Data_all.json")
+                .then(response => response.json())
+                .then((data) => {
+                    generals = data;
+
+
+                    // je stock chaque catégorie dans un nouveau tableau
+                    let architecture = generals.filter(general => general.Categories == "Architecture_Interieure");
+                    let graphique = generals.filter(general => general.Categories == "Design_Graphique");
+                    let objet = generals.filter(general => general.Categories == "Objet_Design");
+                    let ceramique = generals.filter(general => general.Categories == "Ceramique_Verre_Mosaique");
+                    let textile = generals.filter(general => general.Categories == "Design_Textile");
+                    let mobilier = generals.filter(general => general.Categories == "Design_Mobilier");
+                    let publication = generals.filter(general => general.Categories == "Publication");
+                    let sansdom = generals.filter(general => general.Categories == "Sans_Domaine");
+
+                    // au lieu de compter le nombre d'oeuvre par catégorie on peut directement faire catégorie.lentgh
+                    // console.log(architecture.length);
+
+
+                    // année 1850
+                    let anneeA1850 = generals.filter(general => general.Categories == "Architecture_Interieure" && general.Annee_creation > 1850 && general.Annee_creation < 1875);
+                    //    console.log(anneeA1850 );
+                    let anneeG1850 = generals.filter(general => general.Annee_creation > 1850 && general.Annee_creation < 1875 && general.Categories == "Design_Graphique");
+                    //    console.log(anneeG1850 );
+                    let anneeO1850 = generals.filter(general => general.Annee_creation > 1850 && general.Annee_creation < 1875 && general.Categories == "Objet_Design");
+                    //    console.log(anneeO1850 );
+                    let anneeC1850 = generals.filter(general => general.Annee_creation > 1850 && general.Annee_creation < 1875 && general.Categories == "Ceramique_Verre_Mosaique");
+                    //    console.log(anneeC1850 );
+                    let anneeT1850 = generals.filter(general => general.Annee_creation > 1850 && general.Annee_creation < 1875 && general.Categories == "Design_Textile");
+                    //    console.log(anneeT1850 );
+                    let anneeM1850 = generals.filter(general => general.Annee_creation > 1850 && general.Annee_creation < 1875 && general.Categories == "Design_Mobilier");
+                    //    console.log(anneeM1850 );
+                    let anneeP1850 = generals.filter(general => general.Annee_creation > 1850 && general.Annee_creation < 1875 && general.Categories == "Publication");
+                    //    console.log(anneeP1850 );
+                    let anneeS1850 = generals.filter(general => general.Annee_creation > 1850 && general.Annee_creation < 1875 && general.Categories == "Sans_Domaine");
+                    //    console.log(anneeS1850 );
+
+
+                    // 1875
+
+                    let anneeA1875 = generals.filter(general => general.Categories == "Architecture_Interieure" && general.Annee_creation > 1875 && general.Annee_creation < 1900);
+                    //    console.log(anneeA1875 );
+                    let anneeG1875 = generals.filter(general => general.Annee_creation > 1875 && general.Annee_creation < 1900 && general.Categories == "Design_Graphique");
+                    //    console.log(anneeG1875 );
+                    let anneeO1875 = generals.filter(general => general.Annee_creation > 1875 && general.Annee_creation < 1900 && general.Categories == "Objet_Design");
+                    //    console.log(anneeO1875 );
+                    let anneeC1875 = generals.filter(general => general.Annee_creation > 1875 && general.Annee_creation < 1900 && general.Categories == "Ceramique_Verre_Mosaique");
+                    //    console.log(anneeC1875 );
+                    let anneeT1875 = generals.filter(general => general.Annee_creation > 1875 && general.Annee_creation < 1900 && general.Categories == "Design_Textile");
+                    //    console.log(anneeT1875 );
+                    let anneeM1875 = generals.filter(general => general.Annee_creation > 1875 && general.Annee_creation < 1900 && general.Categories == "Design_Mobilier");
+                    //    console.log(anneeM1875 );
+                    let anneeP1875 = generals.filter(general => general.Annee_creation > 1875 && general.Annee_creation < 1900 && general.Categories == "Publication");
+                    //    console.log(anneeP1875 );
+                    let anneeS1875 = generals.filter(general => general.Annee_creation > 1875 && general.Annee_creation < 1900 && general.Categories == "Sans_Domaine");
+                    //    console.log(anneeS1875 );
+
+
+
+                    //1900
+
+                    let anneeA1900 = generals.filter(general => general.Annee_creation > 1900 && general.Annee_creation < 1925 && general.Categories == "Architecture_Interieure");
+                    //    console.log(anneeA1900 );
+                    let anneeG1900 = generals.filter(general => general.Annee_creation > 1900 && general.Annee_creation < 1925 && general.Categories == "Design_Graphique");
+                    //    console.log(anneeG1900 );
+                    let anneeO1900 = generals.filter(general => general.Annee_creation > 1900 && general.Annee_creation < 1925 && general.Categories == "Objet_Design");
+                    //    console.log(anneeO1900 );
+                    let anneeC1900 = generals.filter(general => general.Annee_creation > 1900 && general.Annee_creation < 1925 && general.Categories == "Ceramique_Verre_Mosaique");
+                    //    console.log(anneeC1900 );
+                    let anneeT1900 = generals.filter(general => general.Annee_creation > 1900 && general.Annee_creation < 1925 && general.Categories == "Design_Textile");
+                    //    console.log(anneeT1900 );
+                    let anneeM1900 = generals.filter(general => general.Annee_creation > 1900 && general.Annee_creation < 1925 && general.Categories == "Design_Mobilier");
+                    //    console.log(anneeM1900 );
+                    let anneeP1900 = generals.filter(general => general.Annee_creation > 1900 && general.Annee_creation < 1925 && general.Categories == "Publication");
+                    //    console.log(anneeP1900 );
+                    let anneeS1900 = generals.filter(general => general.Annee_creation > 1900 && general.Annee_creation < 1925 && general.Categories == "Sans_Domaine");
+                    //    console.log(anneeS1900 );
+
+
+
+
+                    // let annee1925 = generals.filter(general => general.Annee_creation >1925 && general.Annee_creation<1950);
+                    //    console.log(annee1925 );
+                    let anneeA1925 = generals.filter(general => general.Annee_creation > 1925 && general.Annee_creation < 1950 && general.Categories == "Architecture_Interieure");
+                    //    console.log(anneeA1925 );
+                    let anneeG1925 = generals.filter(general => general.Annee_creation > 1925 && general.Annee_creation < 1950 && general.Categories == "Design_Graphique");
+                    //    console.log(anneeG1925 );
+                    let anneeO1925 = generals.filter(general => general.Annee_creation > 1925 && general.Annee_creation < 1950 && general.Categories == "Objet_Design");
+                    //    console.log(anneeO1925 );
+                    let anneeC1925 = generals.filter(general => general.Annee_creation > 1925 && general.Annee_creation < 1950 && general.Categories == "Ceramique_Verre_Mosaique");
+                    //    console.log(anneeC1925 );
+                    let anneeT1925 = generals.filter(general => general.Annee_creation > 1925 && general.Annee_creation < 1950 && general.Categories == "Design_Textile");
+                    //    console.log(anneeT1925 );
+                    let anneeM1925 = generals.filter(general => general.Annee_creation > 1925 && general.Annee_creation < 1950 && general.Categories == "Design_Mobilier");
+                    //    console.log(anneeM1925 );
+                    let anneeP1925 = generals.filter(general => general.Annee_creation > 1925 && general.Annee_creation < 1950 && general.Categories == "Publication");
+                    //    console.log(anneeP1925 );
+                    let anneeS1925 = generals.filter(general => general.Annee_creation > 1925 && general.Annee_creation < 1950 && general.Categories == "Sans_Domaine");
+                    //    console.log(anneeS1925 );
+
+
+                    // annee1950 
+                    let anneeA1950 = generals.filter(general => general.Annee_creation > 1950 && general.Annee_creation < 1975 && general.Categories == "Architecture_Interieure");
+                    //    console.log(anneeA1950 );
+                    let anneeG1950 = generals.filter(general => general.Annee_creation > 1950 && general.Annee_creation < 1975 && general.Categories == "Design_Graphique");
+                    //    console.log(anneeG1950 );
+                    let anneeO1950 = generals.filter(general => general.Annee_creation > 1950 && general.Annee_creation < 1975 && general.Categories == "Objet_Design");
+                    //    console.log(anneeO1950 );
+                    let anneeC1950 = generals.filter(general => general.Annee_creation > 1950 && general.Annee_creation < 1975 && general.Categories == "Ceramique_Verre_Mosaique");
+                    //    console.log(anneeC1950 );
+                    let anneeT1950 = generals.filter(general => general.Annee_creation > 1950 && general.Annee_creation < 1975 && general.Categories == "Design_Textile");
+                    //    console.log(anneeT1950 );
+                    let anneeM1950 = generals.filter(general => general.Annee_creation > 1950 && general.Annee_creation < 1975 && general.Categories == "Design_Mobilier");
+                    //    console.log(anneeM1950 );
+                    let anneeP1950 = generals.filter(general => general.Annee_creation > 1950 && general.Annee_creation < 1975 && general.Categories == "Publication");
+                    //    console.log(anneeP1950 );
+                    let anneeS1950 = generals.filter(general => general.Annee_creation > 1950 && general.Annee_creation < 1975 && general.Categories == "Sans_Domaine");
+                    //    console.log(anneeS1950 );
+
+
+                    // annee1975
+                    let anneeA1975 = generals.filter(general => general.Annee_creation > 1975 && general.Annee_creation < 2000 && general.Categories == "Architecture_Interieure");
+                    //    console.log(anneeA1975 );
+                    let anneeG1975 = generals.filter(general => general.Annee_creation > 1975 && general.Annee_creation < 2000 && general.Categories == "Design_Graphique");
+                    //    console.log(anneeG1975 );
+                    let anneeO1975 = generals.filter(general => general.Annee_creation > 1975 && general.Annee_creation < 2000 && general.Categories == "Objet_Design");
+                    //    console.log(anneeO1975 );
+                    let anneeC1975 = generals.filter(general => general.Annee_creation > 1975 && general.Annee_creation < 2000 && general.Categories == "Ceramique_Verre_Mosaique");
+                    //    console.log(anneeC1975 );
+                    let anneeT1975 = generals.filter(general => general.Annee_creation > 1975 && general.Annee_creation < 2000 && general.Categories == "Design_Textile");
+                    //    console.log(anneeT1975 );
+                    let anneeM1975 = generals.filter(general => general.Annee_creation > 1975 && general.Annee_creation < 2000 && general.Categories == "Design_Mobilier");
+                    //    console.log(anneeM1975 );
+                    let anneeP1975 = generals.filter(general => general.Annee_creation > 1975 && general.Annee_creation < 2000 && general.Categories == "Publication");
+                    //    console.log(anneeP1975 );
+                    let anneeS1975 = generals.filter(general => general.Annee_creation > 1975 && general.Annee_creation < 2000 && general.Categories == "Sans_Domaine");
+                    //    console.log(anneeS1975 );
+
+
+                    // annee2000 
+                    let anneeA2000 = generals.filter(general => general.Annee_creation > 2000 && general.Annee_creation < 2000 && general.Categories == "Architecture_Interieure");
+                    console.log(anneeA2000);
+                    let anneeG2000 = generals.filter(general => general.Annee_creation > 2000 && general.Annee_creation < 2025 && general.Categories == "Design_Graphique");
+                    console.log(anneeG2000);
+                    let anneeO2000 = generals.filter(general => general.Annee_creation > 2000 && general.Annee_creation < 2025 && general.Categories == "Objet_Design");
+                    console.log(anneeO2000);
+                    let anneeC2000 = generals.filter(general => general.Annee_creation > 2000 && general.Annee_creation < 2025 && general.Categories == "Ceramique_Verre_Mosaique");
+                    console.log(anneeC2000);
+                    let anneeT2000 = generals.filter(general => general.Annee_creation > 2000 && general.Annee_creation < 2025 && general.Categories == "Design_Textile");
+                    console.log(anneeT2000);
+                    let anneeM2000 = generals.filter(general => general.Annee_creation > 2000 && general.Annee_creation < 2025 && general.Categories == "Design_Mobilier");
+                    console.log(anneeM2000);
+                    let anneeP2000 = generals.filter(general => general.Annee_creation > 2000 && general.Annee_creation < 2025 && general.Categories == "Publication");
+                    console.log(anneeP2000);
+                    let anneeS2000 = generals.filter(general => general.Annee_creation > 2000 && general.Annee_creation < 2025 && general.Categories == "Sans_Domaine");
+                    console.log(anneeS2000);
+
+
+                    // sans_date 
+                    let sansdateA = generals.filter(general => general.Annee_creation == 's.d.' && general.Categories == "Architecture_Interieure");
+                    console.log(sansdateA);
+                    let sansdateG = generals.filter(general => general.Annee_creation == 's.d.' && general.Categories == "Design_Graphique");
+                    console.log(sansdateG);
+                    let sansdateO = generals.filter(general => general.Annee_creation == 's.d.' && general.Categories == "Objet_Design");
+                    console.log(sansdateO);
+                    let sansdateC = generals.filter(general => general.Annee_creation == 's.d.' && general.Categories == "Ceramique_Verre_Mosaique");
+                    console.log(sansdateC);
+                    let sansdateT = generals.filter(general => general.Annee_creation == 's.d.' && general.Categories == "Design_Textile");
+                    console.log(sansdateT);
+                    let sansdateM = generals.filter(general => general.Annee_creation == 's.d.' && general.Categories == "Design_Mobilier");
+                    console.log(sansdateM);
+                    let sansdateP = generals.filter(general => general.Annee_creation == 's.d.' && general.Categories == "Publication");
+                    console.log(sansdateP);
+                    let sansdateS = generals.filter(general => general.Annee_creation == 's.d.' && general.Categories == "Sans_Domaine");
+                    console.log(sansdateS);
+
+
+
+                    // let regex = new RegExp("\d{4}");
+                    // let resultat = regex.test(date);
+                    // console.log(resultat); // Affiche true.
+
+
+
+
+
+                    var margin = { top: 100, right: 100, bottom: 100, left: 100 },
+                        width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
+                        height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+
+
+                    var data = [
+                        // [//serie 1 = valeurs totales
+                        //     { axis: "Architecure d'Intérieur", value: architecture.length },
+                        //     { axis: "Sans Domaine", value: sansdom.length },
+                        //     { axis: "Céramique, Verre, Mosaïque", value: ceramique.length },
+                        //     { axis: "Design Graphique", value: graphique.length },
+                        //     { axis: "Design Textile", value: textile.length },
+                        //     { axis: "Design Mobilier", value: mobilier.length },
+                        //     { axis: "Objet Design", value: objet.length },
+                        //     { axis: "Publication", value: publication.length },
+
+
+                        // ], 
+                        [//serie 1850
+                            { axis: "Architecure d'Intérieur", value: anneeA1850.length },
+                            { axis: "Sans Domaine", value: anneeS1850.length },
+                            { axis: "Céramique, Verre, Mosaïque", value: anneeC1850.length },
+                            { axis: "Design Graphique", value: anneeG1850.length },
+                            { axis: "Design Textile", value: anneeT1850.length },
+                            { axis: "Design Mobilier", value: anneeM1850.length },
+                            { axis: "Objet Design", value: anneeO1850.length },
+                            { axis: "Publication", value: anneeP1850.length },
+
+
+                        ],
+                        [//serie 1875
+                            { axis: "Architecure d'Intérieur", value: anneeA1875.length },
+                            { axis: "Sans Domaine", value: anneeS1875.length },
+                            { axis: "Céramique, Verre, Mosaïque", value: anneeC1875.length },
+                            { axis: "Design Graphique", value: anneeG1875.length },
+                            { axis: "Design Textile", value: anneeT1875.length },
+                            { axis: "Design Mobilier", value: anneeM1875.length },
+                            { axis: "Objet Design", value: anneeO1875.length },
+                            { axis: "Publication", value: anneeP1875.length },
+
+                        ],
+                        [//serie 1900
+                            { axis: "Architecure d'Intérieur", value: anneeA1900.length },
+                            { axis: "Sans Domaine", value: anneeS1900.length },
+                            { axis: "Céramique, Verre, Mosaïque", value: anneeC1900.length },
+                            { axis: "Design Graphique", value: anneeG1900.length },
+                            { axis: "Design Textile", value: anneeT1900.length },
+                            { axis: "Design Mobilier", value: anneeM1900.length },
+                            { axis: "Objet Design", value: anneeO1900.length },
+                            { axis: "Publication", value: anneeP1900.length },
+
+
+                        ]
+                        ,
+
+                        [// série 1925
+                            { axis: "Architecure d'Intérieur", value: anneeA1925.length },
+                            { axis: "Sans Domaine", value: anneeS1925.length },
+                            { axis: "Céramique, Verre, Mosaïque", value: anneeC1925.length },
+                            { axis: "Design Graphique", value: anneeG1925.length },
+                            { axis: "Design Textile", value: anneeT1925.length },
+                            { axis: "Design Mobilier", value: anneeM1925.length },
+                            { axis: "Objet Design", value: anneeO1925.length },
+                            { axis: "Publication", value: anneeS1925.length },
+
+
+                        ],
+                        [// série 1950
+                            { axis: "Architecure d'Intérieur", value: anneeA1950.length },
+                            { axis: "Sans Domaine", value: anneeS1950.length },
+                            { axis: "Céramique, Verre, Mosaïque", value: anneeC1950.length },
+                            { axis: "Design Graphique", value: anneeG1950.length },
+                            { axis: "Design Textile", value: anneeT1950.length },
+                            { axis: "Design Mobilier", value: anneeM1950.length },
+                            { axis: "Objet Design", value: anneeO1950.length },
+                            { axis: "Publication", value: anneeS1950.length },
+
+
+                        ],
+
+                        [// série 1975
+                            { axis: "Architecure d'Intérieur", value: anneeA1975.length },
+                            { axis: "Sans Domaine", value: anneeS1975.length },
+                            { axis: "Céramique, Verre, Mosaïque", value: anneeC1975.length },
+                            { axis: "Design Graphique", value: anneeG1975.length },
+                            { axis: "Design Textile", value: anneeT1975.length },
+                            { axis: "Design Mobilier", value: anneeM1975.length },
+                            { axis: "Objet Design", value: anneeO1975.length },
+                            { axis: "Publication", value: anneeS1975.length },
+
+
+                        ]
+                        ,
+
+                        [// série 2000
+                            { axis: "Architecure d'Intérieur", value: anneeA2000.length },
+                            { axis: "Sans Domaine", value: anneeS2000.length },
+                            { axis: "Céramique, Verre, Mosaïque", value: anneeC2000.length },
+                            { axis: "Design Graphique", value: anneeG2000.length },
+                            { axis: "Design Textile", value: anneeT2000.length },
+                            { axis: "Design Mobilier", value: anneeM2000.length },
+                            { axis: "Objet Design", value: anneeO2000.length },
+                            { axis: "Publication", value: anneeP2000.length },
+
+
+                        ]
+                        ,
+
+                        [// série Sans date
+                            { axis: "Architecure d'Intérieur", value: sansdateA.length },
+                            { axis: "Sans Domaine", value: sansdateS.length },
+                            { axis: "Céramique, Verre, Mosaïque", value: sansdateC.length },
+                            { axis: "Design Graphique", value: sansdateG.length },
+                            { axis: "Design Textile", value: sansdateT.length },
+                            { axis: "Design Mobilier", value: sansdateM.length },
+                            { axis: "Objet Design", value: sansdateO.length },
+                            { axis: "Publication", value: sansdateS.length },
+
+
+                        ],
+
+                    ];
+
+                    var color = d3.scale.ordinal()
+                        // .range(["red","orange","pink","violet","blue","green","yellow","brown"]);
+                        .range(["#9544AF"]);
+
+                    var radarChartOptions = {
+                        w: width,
+                        h: height,
+                        margin: margin,
+                        maxValue: 350,
+                        levels: 1, // nombre de cercle 
+                        roundStrokes: true,
+                        color: color,
+                    };
+
+                    RadarChart(".radarChart", data, radarChartOptions);
+                });
+
+        }
+
+
+
+    </script>
+</body>
+
+</html>
